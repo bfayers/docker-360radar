@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM debian:stable-slim
 
 ENV BEASTPORT=30005 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
@@ -6,6 +6,9 @@ ENV BEASTPORT=30005 \
     URL_MLAT_CLIENT_360R="http://radar.lowflyingwales.co.uk/files/rpi/python3.7/360r-mlat-test-svr1_0.0.1_all.deb"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN mv -i /etc/apt/trusted.gpg.d/debian-archive-*.asc  /root/
+RUN ln -s /usr/share/keyrings/debian-archive-* /etc/apt/trusted.gpg.d/
 
 RUN set -x && \
     apt-get update && \
