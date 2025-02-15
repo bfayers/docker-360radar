@@ -60,9 +60,9 @@ RUN mkdir -p /opt/mlat-client-lfw && \
         cut -d ':' -f 2- | \
         tr -d " " > /mlat_serverport_360r
 
-RUN curl -s --location --output /tmp/s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${S6OVERLAY_VERSION}/s6-overlay-${S6OVERLAY_ARCH}.tar.gz"
+# RUN curl -s --location --output /tmp/s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${S6OVERLAY_VERSION}/s6-overlay-${S6OVERLAY_ARCH}.tar.gz"
 
-RUN tar -hxzf /tmp/s6-overlay.tar.gz -C /
+# RUN tar -hxzf /tmp/s6-overlay.tar.gz -C /
 
 RUN apt-get remove -y \
         binutils \
@@ -84,4 +84,4 @@ RUN apt-get remove -y \
 COPY etc/ /etc/
 
 # Entrypoint is s6-overlay
-ENTRYPOINT [ "/init" ]
+ENTRYPOINT [ "/etc/services.d/mlat-client/run" ]
