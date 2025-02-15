@@ -7,6 +7,9 @@ ENV BEASTPORT=30005 \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+RUN wget http://ftp.uk.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2023.3+deb12u1_all.deb
+RUN dpkg -i ./debian-archive-keyring_2023.3+deb12u1_all.deb
+
 RUN set -x && \
     apt-get update && \
     apt-get install --no-install-recommends -y \
