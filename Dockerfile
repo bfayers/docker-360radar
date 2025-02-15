@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:bookworm-slim
 
 ENV BEASTPORT=30005 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
@@ -6,9 +6,6 @@ ENV BEASTPORT=30005 \
     URL_MLAT_CLIENT_360R="http://radar.lowflyingwales.co.uk/files/rpi/python3.7/360r-mlat-test-svr1_0.0.1_all.deb"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-RUN curl -o debian-keyring.deb http://ftp.uk.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2023.3+deb12u1_all.deb
-RUN dpkg -i ./debian-keyring.deb
 
 RUN set -x && \
     apt-get update && \
