@@ -3,7 +3,9 @@ FROM debian:stable-slim
 ENV BEASTPORT=30005 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     URL_MLAT_CLIENT_LFW="http://radar.lowflyingwales.co.uk/files/rpi/python3.11/64-bit/lfw-mlat-client-rx3_0.0.1_all.deb" \
-    URL_MLAT_CLIENT_360R="http://radar.lowflyingwales.co.uk/files/rpi/python3.11/64-bit/360r-mlat-test-svr1_0.0.1_all.deb"
+    URL_MLAT_CLIENT_360R="http://radar.lowflyingwales.co.uk/files/rpi/python3.11/64-bit/360r-mlat-test-svr1_0.0.1_all.deb" \
+    S6OVERLAY_VERSION="v3.2.0.0" \
+    S6OVERLAY_ARCH="armhf"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -58,7 +60,11 @@ RUN mkdir -p /opt/mlat-client-lfw && \
         cut -d ':' -f 2- | \
         tr -d " " > /mlat_serverport_360r
 
-RUN curl -s https://raw.githubusercontent.com/mikenye/deploy-s6-overlay/master/deploy-s6-overlay-v3.sh | sh
+RUN curl -s --location --output /tmp/s6-overlay-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/${S6OVERLAY_VERSION}/s6-overlay-noarch.tar.xz"
+RUN curl -s --location --output /tmp/s6-overlay.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/${S6OVERLAY_VERSION}/s6-overlay-${S6OVERLAY_ARCH}.tar.xz"
+
+RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
+RUN tar -C / -Jxpf /tmp/s6-overlay.tar.xz
 
 RUN apt-get remove -y \
         binutils \
