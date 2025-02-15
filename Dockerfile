@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:stable-slim
 
 ENV BEASTPORT=30005 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN set -x && \
     apt-get update && \
-    apt-get install --no-install-recommends -y \
+    apt-get install --allow-unauthenticated --allow-insecure-repositories --no-install-recommends -y \
         binutils \
         build-essential \
         ca-certificates \
