@@ -8,7 +8,7 @@ ENV BEASTPORT=30005 \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN set -x && \
-    apt-get update && \
+    apt-get update --allow-unauthenticated --allow-insecure-repositories && \
     apt-get install --allow-unauthenticated --allow-insecure-repositories --no-install-recommends -y \
         binutils \
         build-essential \
