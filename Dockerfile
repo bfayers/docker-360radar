@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN set -x && \
     apt-get update --allow-unauthenticated --allow-insecure-repositories && \
-    apt-get install --allow-unauthenticated --allow-insecure-repositories --no-install-recommends -y \
+    apt-get install --no-install-recommends -y \
         binutils \
         build-essential \
         ca-certificates \
