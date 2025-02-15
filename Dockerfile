@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:stable
 
 ENV BEASTPORT=30005 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
