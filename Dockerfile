@@ -7,9 +7,8 @@ ENV BEASTPORT=30005 \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN set -x && \
-    apt-get update --allow-unauthenticated --allow-insecure-repositories && \
-    apt-get install --allow-unauthenticated --no-install-recommends -y \
+RUN apt-get update --allow-unauthenticated --allow-insecure-repositories
+RUN apt-get install --allow-unauthenticated --no-install-recommends -y \
         binutils \
         build-essential \
         ca-certificates \
@@ -21,17 +20,17 @@ RUN set -x && \
         python3-dev \
         python3-setuptools \
         socat \
-        xz-utils \
-        && \
-    # Deploy the mutability mlat-client
-    git clone https://github.com/mutability/mlat-client.git /src/mlat-client && \
+        xz-utils
+
+RUN git clone https://github.com/mutability/mlat-client.git /src/mlat-client && \
     pushd /src/mlat-client && \
     BRANCH_MLAT_CLIENT="$(git tag --sort="-creatordate" | head -1)" && \
     git checkout "$BRANCH_MLAT_CLIENT" && \
     ./setup.py install && \
-    popd && \
-    # Deploy 360Radar specific files (Scotland, Northern Ireland and Eire only)
-    mkdir -p /opt/mlat-client-lfw && \
+    popd
+
+# Deploy 360Radar specific files (Scotland, Northern Ireland and Eire only)
+RUN mkdir -p /opt/mlat-client-lfw && \
     pushd /opt/mlat-client-lfw && \
     curl --location -o lfw-mlat-client-rx3_all.deb "$URL_MLAT_CLIENT_LFW" && \
     ar x ./lfw-mlat-client-rx3_all.deb && \
@@ -57,11 +56,11 @@ RUN set -x && \
         grep -B 999 -m 1 'Default:' | \
         grep 'Default:' | \
         cut -d ':' -f 2- | \
-        tr -d " " > /mlat_serverport_360r && \
-    # Deploy s6-overlay
-    curl -s https://raw.githubusercontent.com/mikenye/deploy-s6-overlay/master/deploy-s6-overlay.sh | sh && \
-    # Clean up
-    apt-get remove -y \
+        tr -d " " > /mlat_serverport_360r
+
+RUN curl -s https://raw.githubusercontent.com/mikenye/deploy-s6-overlay/master/deploy-s6-overlay-v3.sh | sh
+
+RUN apt-get remove -y \
         binutils \
         build-essential \
         curl \
