@@ -42,8 +42,8 @@ RUN mkdir -p /opt/mlat-client-lfw && \
     # Deploy 360Radar specific files (SE England, SW England, Wales, Midlands, Northern England)
     mkdir -p /opt/mlat-client-360r && \
     pushd /opt/mlat-client-360r && \
-    curl --location -o 360r-mlat-test-svr1_all.deb "$URL_MLAT_CLIENT_360R" && \
-    ar x ./360r-mlat-test-svr1_all.deb && \
+    curl --location -o 360r-mlat-test-svr4_all.deb "$URL_MLAT_CLIENT_360R" && \
+    ar x ./360r-mlat-test-svr4_all.deb && \
     tar xvf data.tar.xz && \
     tar xvf control.tar.xz && \
     popd && \
@@ -54,7 +54,7 @@ RUN mkdir -p /opt/mlat-client-lfw && \
         cut -d ':' -f 2- | \
         tr -d " " > /mlat_serverport_lfw && \
     # Get the supplied MLAT server & port for (SE England, SW England, Wales, Midlands, Northern England)
-    grep -m 1 -A 999 'Template: 360r-mlat-test-svr1/server-hostport' /opt/mlat-client-360r/templates | \
+    grep -m 1 -A 999 'Template: 360r-mlat-test-svr4/server-hostport' /opt/mlat-client-360r/templates | \
         grep -B 999 -m 1 'Default:' | \
         grep 'Default:' | \
         cut -d ':' -f 2- | \
