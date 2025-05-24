@@ -3,7 +3,7 @@ FROM debian:stable-slim
 ENV BEASTPORT=30005 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     URL_MLAT_CLIENT_LFW="http://radar.lowflyingwales.co.uk/files/rpi/python3.11/64-bit/lfw-mlat-client-rx3_0.0.1_all.deb" \
-    URL_MLAT_CLIENT_360R="http://radar.lowflyingwales.co.uk/files/rpi/python3.11/64-bit/360r-mlat-test-svr1_0.0.1_all.deb" \
+    URL_MLAT_CLIENT_360R="http://radar.lowflyingwales.co.uk/files/rpi/python3.11/64-bit/360r-mlat-test-svr4_0.0.1_all.deb" \
     S6OVERLAY_VERSION="v2.2.0.3" \
     S6OVERLAY_ARCH="armhf"
 
