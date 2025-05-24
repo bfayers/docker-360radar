@@ -60,10 +60,6 @@ RUN mkdir -p /opt/mlat-client-lfw && \
         cut -d ':' -f 2- | \
         tr -d " " > /mlat_serverport_360r
 
-# RUN curl -s --location --output /tmp/s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${S6OVERLAY_VERSION}/s6-overlay-${S6OVERLAY_ARCH}.tar.gz"
-
-# RUN tar -hxzf /tmp/s6-overlay.tar.gz -C /
-
 RUN apt-get remove -y \
         binutils \
         build-essential \
@@ -83,5 +79,8 @@ RUN apt-get remove -y \
 # Copy config files
 COPY etc/ /etc/
 
+# Ensure the entrypoint script is executable
+RUN chmod +x /etc/services.d/mlat-client/run
+
 # Entrypoint is s6-overlay
-ENTRYPOINT [ "/etc/services.d/mlat-client/run" ]
+ENTRYPOINT ["/etc/services.d/mlat-client/run"]
